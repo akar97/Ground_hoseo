@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">=</string>
+    <string name="first_des">Ground에 오신것을 환영합니다.\nGround는 화상교육/회의 애플리케이션입니다</string>
+    <string name="first_title">Ground</string>
+    <string name="second_title">특징</string>
+    <string name="second_des">AI가 탑재된 화상공유 시스템을 제공합니다\n안면인식을 통한 출석체크 기능!</string>
+    <string name="appinfo_login">로그인</string>
+    <string name="appinfo_regist">회원가입</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">
+        com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior
+    </string>
+    <string name="text">화상회의</string>
+    <string name="text3">Q/A</string>
+    <string name="text4">공지사항</string>
+    <string name="action_clear">Clear</string>
+</resources>
