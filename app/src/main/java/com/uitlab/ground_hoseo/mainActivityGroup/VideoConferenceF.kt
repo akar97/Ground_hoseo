@@ -14,7 +14,6 @@ class VideoConferenceF: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        Log.d("프래그먼트 호출1", ":호출!")
 
         binding = VideoConferenceFragmentBinding.inflate(inflater,container,false)
 

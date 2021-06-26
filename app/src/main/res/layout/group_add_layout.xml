@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4CAF50">
+    android:background="#6AAFE6">
 
     <com.github.florent37.materialtextfield.MaterialTextField
         android:id="@+id/materialTextField4"

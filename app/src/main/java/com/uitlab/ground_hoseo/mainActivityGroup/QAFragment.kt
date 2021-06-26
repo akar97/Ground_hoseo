@@ -14,8 +14,6 @@ class QAFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        Log.d("프래그먼트 호출3", ":호출!")
-
         binding = QaFragmentBinding.inflate(inflater,container,false)
 
         return binding!!.root

@@ -3,7 +3,7 @@
     android:id="@+id/tvItemSpinner"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@drawable/group_number_spinner"
+    android:background="#6AAFE6"
     android:fontFamily="@font/default_font"
     android:gravity="center"
     android:textColor="#FFFFFF"

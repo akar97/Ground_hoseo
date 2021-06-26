@@ -44,7 +44,7 @@ class Login: AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.run {
-            kakaoLoginButton.setOnClickListener(kakoLogin()) //카카오톡 로그인
+            //kakaoLoginButton.setOnClickListener(kakoLogin()) //카카오톡 로그인
             GoogleLogin.setOnClickListener(googleLogin()) //구글 로그인 이벤트
         }
 /*

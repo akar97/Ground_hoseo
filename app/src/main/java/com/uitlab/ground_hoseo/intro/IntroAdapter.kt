@@ -13,11 +13,11 @@ class IntroAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> {
-                frag1 = IntroFragment.newInstance(Color.parseColor("#4caf50"), position)
+                frag1 = IntroFragment.newInstance(Color.parseColor("#6AAFE6"), position)
                 return frag1
             }
             else -> {
-                frag2 = IntroFragment.newInstance(Color.parseColor("#4caf50"), position)
+                frag2 = IntroFragment.newInstance(Color.parseColor("#6AAFE6"), position)
                 return frag2
             }
         }

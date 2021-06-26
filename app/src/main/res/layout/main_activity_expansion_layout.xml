@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4CAF50"
+    android:background="#6AAFE6"
     tools:context=".mainActivityGroup.SecondActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -19,7 +19,7 @@
         android:layout_width="372dp"
         android:layout_height="0dp"
         android:layout_marginBottom="24dp"
-        android:background="#4CAF50"
+        android:background="#6AAFE6"
         app:layout_constraintBottom_toTopOf="@+id/expandable_bottom_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         app:exb_backgroundCornerRadius="25dp"
-        app:exb_itemInactiveColor="#4CAF50"
+        app:exb_itemInactiveColor="#6AAFE6"
         app:exb_items="@menu/menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

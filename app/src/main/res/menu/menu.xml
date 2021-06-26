@@ -5,25 +5,26 @@
         android:id="@+id/introduce_frag"
         android:title="수업정보"
         android:icon="@drawable/ic_baseline_assignment_ind_24"
-        app:exb_color="#4CAF50"
+        app:exb_color="#6AAFE6"
         />
 
     <item
         android:id="@+id/video_frag"
         android:title="@string/text"
         android:icon="@drawable/ic_baseline_camera_indoor_24"
-        app:exb_color="#4CAF50"
-       />
+        app:exb_color="#6AAFE6"
+        />
 
     <item
         android:id="@+id/notice_frag"
         android:title="@string/text4"
         android:icon="@drawable/ic_baseline_priority_high_24"
-        app:exb_color="#4CAF50" />
-
+        app:exb_color="#6AAFE6"
+        />
     <item
         android:id="@+id/qa_frag"
         android:title="@string/text3"
         android:icon="@drawable/ic_baseline_receipt_24"
-        app:exb_color="#4CAF50" />
+        app:exb_color="#6AAFE6"
+        />
 </menu>
