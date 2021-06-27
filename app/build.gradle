@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.biometric:biometric:1.0.1' //생체인식라이브러리
     implementation 'com.github.st235:expandablebottombar:1.4.0'
     implementation 'com.yarolegovich:discrete-scrollview:1.5.1' //DiscreteScrollView 라이브러리
     implementation "com.kakao.sdk:v2-user:2.5.1" // 카카오 로그인

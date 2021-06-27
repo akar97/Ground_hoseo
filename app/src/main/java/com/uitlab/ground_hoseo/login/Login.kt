@@ -1,11 +1,16 @@
 package com.uitlab.ground_hoseo.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -14,13 +19,15 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.auth.model.OAuthToken
-import com.uitlab.ground_hoseo.R
-import com.uitlab.ground_hoseo.databinding.LoginLayoutBinding
-import kotlinx.android.synthetic.main.activity_second.view.*
-import java.util.*
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.user.UserApiClient
+import com.uitlab.ground_hoseo.R
+import com.uitlab.ground_hoseo.databinding.LoginLayoutBinding
 import com.uitlab.ground_hoseo.mainActivityGroup.MainPageActivity
+import kotlinx.android.synthetic.main.activity_second.view.*
+import kotlinx.android.synthetic.main.login_layout.*
+import java.util.*
+import java.util.concurrent.Executor
 
 class Login: AppCompatActivity() {
 
@@ -28,11 +35,24 @@ class Login: AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
     lateinit var googleSignInClient: GoogleSignInClient //구글 로그인을 관리하는 클래스
     val RC_SIGN_IN = 10
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    private var status: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        status = BiometricManager.from(this).canAuthenticate()
+        if(status == BiometricManager.BIOMETRIC_SUCCESS){
+            biometricPrompt = createBiometricPrompt()
+            promptInfo = createPromptInfo()
+            binding.bioLogin.setOnClickListener { biometricPrompt.authenticate(promptInfo) }
+
+        }else{
+            //지문인식 사용 불가능
+        }
 
         mAuth = FirebaseAuth.getInstance() //파이어베이스 인증객체 생성
 
@@ -66,14 +86,51 @@ class Login: AppCompatActivity() {
 */
     }
 
+
     override fun onStart() {
         super.onStart()
         val currentUser = mAuth.currentUser //로그인되어 있는지 확인
     }
 
+    private fun createPromptInfo(): BiometricPrompt.PromptInfo{
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("지문 로그인")
+            .setSubtitle("로그인에 필요한 지문인식 진행주시기 바랍니다.")
+            .setDescription("원하시지 않는다면 취소를 눌러주세요.")
+            .setConfirmationRequired(false)
+            .setNegativeButtonText("취소")
+            .build()
+
+        return promptInfo
+    }
+
+    private fun createBiometricPrompt(): BiometricPrompt {
+        val executor = ContextCompat.getMainExecutor(this)
+        val callback = object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Log.d("에러","$errorCode :: $errString")
+            }
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Log.d("생체인증","인증 실패")
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Log.d("생체인증", "인증 성공") //인증 완료 시 작업
+                val intent: Intent = Intent(this@Login, MainPageActivity::class.java)
+                startActivity(intent)
+            }
+        }//The API requires the client/Activity context for displaying the prompt view
+        val biometricPrompt = BiometricPrompt(this, executor, callback)
+        return biometricPrompt
+    }
+
+
     inner class kakoLogin(): View.OnClickListener{
         override fun onClick(v: View?) {
-            val callback:(OAuthToken?, Throwable?) -> Unit = { token, error ->
+            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null && v != null) {
                     when {
                         error.toString() == AccessDenied.toString() -> {
@@ -83,7 +140,11 @@ class Login: AppCompatActivity() {
                             Toast.makeText(v.context, "유효하지 않은 앱", Toast.LENGTH_SHORT).show()
                         }
                         error.toString() == InvalidGrant.toString() -> {
-                            Toast.makeText(v.context, "인증 수단이 유효하지 않아 인증할 수 없는 상태", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                v.context,
+                                "인증 수단이 유효하지 않아 인증할 수 없는 상태",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         error.toString() == InvalidRequest.toString() -> {
                             Toast.makeText(v.context, "요청 파라미터 오류", Toast.LENGTH_SHORT).show()
@@ -92,7 +153,11 @@ class Login: AppCompatActivity() {
                             Toast.makeText(v.context, "유효하지 않은 scope ID", Toast.LENGTH_SHORT).show()
                         }
                         error.toString() == Misconfigured.toString() -> {
-                            Toast.makeText(v.context, "설정이 올바르지 않음(android key hash)", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                v.context,
+                                "설정이 올바르지 않음(android key hash)",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                         error.toString() == ServerError.toString() -> {
                             Toast.makeText(v.context, "서버 내부 에러", Toast.LENGTH_SHORT).show()
@@ -161,18 +226,20 @@ class Login: AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount){ //구글정보를 파이어베이스로 값 넘기기
         val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, OnCompleteListener<AuthResult> {
-            if(it.isSuccessful){
-                Log.d("구분줄", "--------------------------------------------------")
-                Log.d("파이어베이스 등록", "등록 성공")
-                Log.d("", "")
-                val intent: Intent = Intent(this@Login, MainPageActivity::class.java)
-                startActivity(intent)
-            }else{
-                Log.d("구분줄", "--------------------------------------------------")
-                Log.d("파이어베이스 등록", "등록 실패")
-                Log.d("", "")
-            }
-        })
+        mAuth.signInWithCredential(credential).addOnCompleteListener(
+            this,
+            OnCompleteListener<AuthResult> {
+                if (it.isSuccessful) {
+                    Log.d("구분줄", "--------------------------------------------------")
+                    Log.d("파이어베이스 등록", "등록 성공")
+                    Log.d("", "")
+                    val intent: Intent = Intent(this@Login, MainPageActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Log.d("구분줄", "--------------------------------------------------")
+                    Log.d("파이어베이스 등록", "등록 실패")
+                    Log.d("", "")
+                }
+            })
     }
 }

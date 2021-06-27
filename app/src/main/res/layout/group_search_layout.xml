@@ -21,6 +21,7 @@
         android:layout_marginEnd="244dp"
         android:fontFamily="@font/default_font"
         android:text="회원님"
+        android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
@@ -32,6 +33,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/default_font"
         android:text="찾고 싶은 그룹이 있나요?"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.384"

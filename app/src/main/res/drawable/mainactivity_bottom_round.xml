@@ -7,8 +7,8 @@
                     android:color="#6AAFE6"/>
             <solid android:color="#6AAFE6"/>
             <corners
-                android:bottomRightRadius="35dp"
-                android:bottomLeftRadius="35dp"/>
+                android:bottomRightRadius="70dp"
+                android:bottomLeftRadius="70dp"/>
         </shape>
     </item>
 </layer-list>

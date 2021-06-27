@@ -100,7 +100,7 @@
     </com.github.florent37.materialtextfield.MaterialTextField>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/search_group_btn"
         android:layout_width="306dp"
         android:layout_height="58dp"
         android:layout_marginBottom="36dp"

@@ -3,6 +3,7 @@
     package="com.uitlab.ground_hoseo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" /> <!-- 생체인식 퍼미션 -->
 
     <application
         android:name=".GlobalApplication"
@@ -23,17 +24,14 @@
         </activity>
         <activity android:name=".login.Login"
             android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".detailpage.DetailPage"
-            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".mainActivityGroup.MainPageActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".mainActivityGroup.SecondActivity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".groupCreate.GroupCreateActivity"
             android:windowSoftInputMode="adjustPan"></activity>
-
-
-
+        <activity android:name=".groupSearch.GroupSearchActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".mainActivityGroup.DetailGroupActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
